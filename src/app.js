@@ -1,6 +1,7 @@
 import Store from "./redux/store.js";
 import JuanjoTest from "./screens/test.js";
-Store()
+
+const store = Store()
 
 const component = JuanjoTest()
 

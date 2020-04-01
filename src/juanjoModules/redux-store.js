@@ -32,6 +32,10 @@ export const {
                 allReducers[key] = reducers[key]
                 state[key] = reducers[key]()
             })
+            return {
+                dispatch,
+                getState
+            }
         }
 
         const createReduxStore = () => ({
