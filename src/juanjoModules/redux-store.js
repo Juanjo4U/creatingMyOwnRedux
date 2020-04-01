@@ -1,6 +1,4 @@
 export const {
-    dispatch,
-    getState,
     connect,
     createStore
 } = (
@@ -37,8 +35,6 @@ export const {
         }
 
         const createReduxStore = () => ({
-            dispatch,
-            getState,
             connect,
             createStore
         })
