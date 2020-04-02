@@ -4,12 +4,12 @@ const initialState = {
     userName: 'InitialName'
 };
 
-export default (state = initialState, action = {}) => {
-    switch (action.type) {
+export default (state = initialState, { type, payload }) => {
+    switch (type) {
         case SET_USER_NAME:
             return {
                 ...state,
-                userName: action.payload,
+                userName: payload,
             }
 
         default:

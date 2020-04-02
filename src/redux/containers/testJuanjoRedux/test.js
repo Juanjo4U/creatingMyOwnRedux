@@ -3,7 +3,7 @@ import myComponent from "../../../components/testJuanjoRedux.js";
 import { myAction } from "../../actions/login.js";
 
 const mapStateToProps = state => ({
-    name: state?.login?.userName
+    name: state.login?.userName
 })
 
 const mapDispatchToProps = dispatch => ({

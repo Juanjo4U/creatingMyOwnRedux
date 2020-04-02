@@ -20,17 +20,15 @@ export const {
         }
 
         const connect = (mapStateToProps, mapDispatchToProps) => component => {
-            {
-                const newComponent = () => component({ ...mapStateToProps(getState()), ...mapDispatchToProps(dispatch) })
-                subscribers.push(newComponent)
-                return newComponent
-            }
+            const newComponent = () => component({ ...mapStateToProps(getState()), ...mapDispatchToProps(dispatch) })
+            subscribers.push(newComponent)
+            return newComponent
         }
 
         const createStore = (reducers = {}) => {
             Object.keys(reducers).map(key => {
                 allReducers[key] = reducers[key]
-                state[key] = reducers[key]()
+                state[key] = reducers[key](undefined, {})
             })
             return {
                 dispatch,
