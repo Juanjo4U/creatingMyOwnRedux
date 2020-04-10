@@ -10,3 +10,4 @@ export default component
 component.changeName('Jose')
 component.changeName('Pepe')
 component.changeName('Juanjo')
+component.changePassword('I am the fucking boss')

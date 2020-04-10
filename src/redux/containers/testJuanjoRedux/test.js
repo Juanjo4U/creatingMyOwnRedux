@@ -1,13 +1,15 @@
 import { connect } from "../../../juanjoModules/redux-store.js";
 import myComponent from "../../../components/testJuanjoRedux.js";
-import { myAction } from "../../actions/login.js";
+import { setName, setPassword } from "../../actions/login.js";
 
 const mapStateToProps = state => ({
-    name: state.login?.userName
+    name: state.login.userName,
+    password: state.login.password
 })
 
 const mapDispatchToProps = dispatch => ({
-    myAction: (name) => dispatch(myAction(name))
+    setName: (name) => dispatch(setName(name)),
+    setPassword
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(myComponent)

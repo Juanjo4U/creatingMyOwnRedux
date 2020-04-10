@@ -7,20 +7,36 @@ export const {
 
         const getState = () => Object.assign({}, state)
 
-        const dispatch = action => {
-            let actionReducer = action(dispatch, getState)
+        const notifySubscribers = () => subscribers.forEach(subscriber => subscriber())
+
+        const notifyReducers = action => {
             Object.keys(allReducers).map(key => {
                 state = {
                     ...state,
-                    [key]: allReducers[key](getState()[key], actionReducer)
+                    [key]: allReducers[key](getState()[key], action)
                 }
-                console.log('%cdispatchNewState: ', 'font-size: 20px; color: lightgreen;', state)
+                console.log('%cupdateState: ', 'font-size: 20px; color: lightgreen;', state)
             })
-            subscribers.forEach(sub => sub())
+            notifySubscribers()
+        }
+
+        const dispatch = action => {
+            if (typeof action === 'function') action = action(dispatch, getState)
+            if (typeof action === 'object') notifyReducers(action)
         }
 
         const connect = (mapStateToProps, mapDispatchToProps) => component => {
-            const newComponent = () => component({ ...mapStateToProps(getState()), ...mapDispatchToProps(dispatch) })
+            if (typeof mapDispatchToProps === 'function') mapDispatchToProps = mapDispatchToProps(dispatch);
+
+            Object.keys(mapDispatchToProps).forEach(key => {
+                const reduxAction = mapDispatchToProps[key]
+                mapDispatchToProps[key] = (...arg) => {
+                    const notification = reduxAction(...arg);
+                    if (typeof notification === 'object') notifyReducers(notification)
+                }
+            })
+
+            const newComponent = () => component({ ...mapStateToProps(getState()), ...mapDispatchToProps })
             subscribers.push(newComponent)
             return newComponent
         }
