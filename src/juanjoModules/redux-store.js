@@ -7,7 +7,7 @@ export const {
 
         const getState = () => Object.assign({}, state)
 
-        const notifySubscribers = () => subscribers.forEach(subscriber => subscriber())
+        const notifySubscribers = () => subscribers.map(subscriber => subscriber())
 
         const notifyReducers = action => {
             Object.keys(allReducers).map(key => {
@@ -15,8 +15,8 @@ export const {
                     ...state,
                     [key]: allReducers[key](getState()[key], action)
                 }
-                console.log('%cupdateState: ', 'font-size: 20px; color: lightgreen;', state)
             })
+            console.log('%cupdateState: ', 'font-size: 20px; color: lightgreen;', state)
             notifySubscribers()
         }
 
@@ -36,8 +36,14 @@ export const {
                 }
             })
 
-            const newComponent = () => component({ ...mapStateToProps(getState()), ...mapDispatchToProps })
-            subscribers.push(newComponent)
+            let subscribed = false;
+            const newComponent = (...arg) => {
+                if (!subscribed) {
+                    subscribers.push(() => newComponent(...arg))
+                    subscribed = true
+                }
+                return component({ ...mapStateToProps(getState(), ...arg), ...mapDispatchToProps })
+            }
             return newComponent
         }
 

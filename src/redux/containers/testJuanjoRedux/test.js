@@ -2,9 +2,9 @@ import { connect } from "../../../juanjoModules/redux-store.js";
 import myComponent from "../../../components/testJuanjoRedux.js";
 import { setName, setPassword } from "../../actions/login.js";
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
     name: state.login.userName,
-    password: state.login.password
+    password: state.login.password + ' - ' + props
 })
 
 const mapDispatchToProps = dispatch => ({
