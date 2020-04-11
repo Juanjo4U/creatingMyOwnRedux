@@ -3,7 +3,7 @@ export const {
     createStore
 } = (
     () => {
-        let store, state = {}, allReducers = {}, subscribers = [];
+        let store, state = {}, allReducers = {}, subscribers = [], index = 0;
 
         const getState = () => Object.assign({}, state)
 
@@ -36,14 +36,15 @@ export const {
                 }
             })
 
-            let subscribed = false;
+            let componentIndex = index;
+
             const newComponent = (...arg) => {
-                if (!subscribed) {
-                    subscribers.push(() => newComponent(...arg))
-                    subscribed = true
-                }
+                subscribers[componentIndex] = () => newComponent(...arg)
                 return component({ ...mapStateToProps(getState(), ...arg), ...mapDispatchToProps })
             }
+
+            index++;
+
             return newComponent
         }
 
