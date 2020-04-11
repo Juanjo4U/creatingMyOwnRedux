@@ -3,21 +3,23 @@ export const {
     createStore
 } = (
     () => {
-        let store, state = {}, allReducers = {}, subscribers = [], index = 0;
+        let store, state = {}, allReducers = {}, reduxComponents = [], index = 0;
 
         const getState = () => Object.assign({}, state)
 
-        const notifySubscribers = () => subscribers.map(subscriber => subscriber())
+        const refreshComponents = () => reduxComponents.map(component => component())
 
         const notifyReducers = action => {
+            console.log('%cprevState: ', 'font-size: 20px; color: lightgray;', state)
+            console.log('%cAction: ', 'font-size: 20px; color: yellow;', action)
             Object.keys(allReducers).map(key => {
                 state = {
                     ...state,
                     [key]: allReducers[key](getState()[key], action)
                 }
             })
-            console.log('%cupdateState: ', 'font-size: 20px; color: lightgreen;', state)
-            notifySubscribers()
+            console.log('%cnextState: ', 'font-size: 20px; color: lightgreen;', state)
+            refreshComponents()
         }
 
         const dispatch = action => {
@@ -39,7 +41,7 @@ export const {
             let componentIndex = index;
 
             const newComponent = (...arg) => {
-                subscribers[componentIndex] = () => newComponent(...arg)
+                reduxComponents[componentIndex] = () => newComponent(...arg)
                 return component({ ...mapStateToProps(getState(), ...arg), ...mapDispatchToProps })
             }
 
