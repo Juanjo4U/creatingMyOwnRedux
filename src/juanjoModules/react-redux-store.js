@@ -5,7 +5,7 @@ export const {
     createStore
 } = (
     () => {
-        let store, state, allReducers, subscribers = [], index = 0;
+        let redux, state, allReducers, subscribers = [], index = 0;
 
         const getState = () => Object.assign({}, state)
 
@@ -75,16 +75,16 @@ export const {
             }
         }
 
-        const createReduxStore = () => ({
+        const createRedux = () => ({
             connect,
             combineReducers,
             createStore
         })
 
-        if (!store) {
-            store = createReduxStore()
-            return store
+        if (!redux) {
+            redux = createRedux()
+            return redux
         }
-        else return store
+        else return redux
     }
 )()
