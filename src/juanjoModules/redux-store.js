@@ -1,9 +1,10 @@
 export const {
     connect,
+    combineReducers,
     createStore
 } = (
     () => {
-        let store, state = {}, allReducers = {}, reduxComponents = [], index = 0;
+        let store, state, allReducers, reduxComponents = [], index = 0;
 
         const getState = () => Object.assign({}, state)
 
@@ -50,11 +51,17 @@ export const {
             return newComponent
         }
 
-        const createStore = (reducers = {}) => {
-            Object.keys(reducers).map(key => {
-                allReducers[key] = reducers[key]
-                state[key] = reducers[key](undefined, {})
-            })
+        const combineReducers = (reducers = {}) => {
+            allReducers = {
+                ...allReducers,
+                ...reducers
+            };
+            Object.keys(reducers).map(key => reducers[key] = reducers[key](undefined, {}))
+            return reducers
+        }
+
+        const createStore = newState => {
+            state = newState;
             return {
                 dispatch,
                 getState
@@ -63,6 +70,7 @@ export const {
 
         const createReduxStore = () => ({
             connect,
+            combineReducers,
             createStore
         })
 

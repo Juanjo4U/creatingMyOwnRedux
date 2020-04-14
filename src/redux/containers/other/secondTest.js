@@ -5,7 +5,7 @@ import { setGreeting } from "../../actions/secondTest.js";
 const mapStateToProps = (state, ownProps) => (
     {
         name: state.login.userName,
-        greet: state.greeting.greet + ' greetProp: ' + ownProps
+        greet: state.greeting.greet + '  componentProps:  ' + ownProps
     }
 )
 

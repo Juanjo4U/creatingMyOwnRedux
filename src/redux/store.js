@@ -1,5 +1,4 @@
 import { createStore } from "../juanjoModules/redux-store.js";
-import greeting from "./reducers/secondTest.js";
-import login from "./reducers/login.js";
+import rootReducers from "./reducers/index.js";
 
-export default () => createStore({ login, greeting })
+export default () => createStore(rootReducers)

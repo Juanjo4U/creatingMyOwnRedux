@@ -63,7 +63,7 @@ observer2.notifySubs('change')
 observer2.redux.changeGreet('saludosSecond')
 
 observer.redux.changeName('The fucking Boss')
-observer.redux.changePassword('u gotta be kidding meeeeeeeeeeeeeeeeeeeeee')
+observer.redux.changePassword('asdfg')
 
 observer2.redux.changeGreet('thirdSecond')
 observer2.redux.changeGreet('fourthSecond')
