@@ -1,21 +1,24 @@
-import { SET_USER_NAME, SET_USER_PASSWORD } from "../actions/types.js";
+import {
+    SET_LOADER, SET_CRACK_NAME
+} from "./types.js";
 
 const initialState = {
-    userName: 'InitialName'
+    isLoading: false,
+    name: ''
 };
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-        case SET_USER_NAME:
+        case SET_LOADER:
             return {
                 ...state,
-                userName: payload,
+                isLoading: payload,
             }
 
-        case SET_USER_PASSWORD:
+        case SET_CRACK_NAME:
             return {
                 ...state,
-                password: payload
+                name: payload
             }
 
         default:
